@@ -1,28 +1,28 @@
-<ng-container *ngIf="{modelInfo: modelAndColorConfig$ | async, configInfo: configOptions$ | async} as summary">
+<section>
   
   <h1>Step 3: Summary</h1>
-
-  <h3>Your Tesla {{summary.modelInfo?.description}}</h3>
+  <h3>Your Tesla {{model.description}}</h3>
  
   <section class="flex common-space">
-    <span class="equal-flex-item">{{summary.configInfo?.configs?.[0]?.description}}</span>
-    <span class="equal-flex-item">{{summary.configInfo?.configs?.[0]?.price | currency}}</span>
+    <span class="equal-flex-item">{{configOptions.configs[0].description}}</span>
+    <span class="equal-flex-item">{{configOptions.configs[0].price | currency}}</span>
   </section>
-  <h6>Range: {{summary.configInfo?.configs?.[0]?.range}} - Max speed: {{summary.configInfo?.configs?.[0]?.speed}}</h6>
+  
+  <h6>Range: {{configOptions.configs[0].range}} - Max speed: {{configOptions.configs[0].speed}}</h6>
   
   <section class="flex common-space">
-    <span class="equal-flex-item">{{summary.modelInfo?.colors?.[0]?.description}} color</span>
-    <span class="equal-flex-item">{{summary.modelInfo?.colors?.[0]?.price | currency}}</span>
+    <span class="equal-flex-item">{{color.description}} color</span>
+    <span class="equal-flex-item">{{color.price | currency}}</span>
   </section>
 
-  <ng-container *ngIf="summary.configInfo?.towHitch">
+  <ng-container *ngIf="configOptions.towHitch">
     <section class="flex common-space">
       <span class="equal-flex-item">Tow Hitch Package</span>
       <span class="equal-flex-item">{{1000 | currency}}</span>
     </section>
   </ng-container>
 
-  <ng-container *ngIf="summary.configInfo?.yoke">
+  <ng-container *ngIf="configOptions.yoke">
     <section class="flex common-space">
       <span class="equal-flex-item">Yoke steering wheel Package</span>
       <span class="equal-flex-item">{{1000 | currency}}</span>
@@ -32,8 +32,8 @@
   <section class="flex common-space total">
     <span class="equal-flex-item">{{'total cost' | uppercase}}</span>
     <span class="equal-flex-item">
-      {{(summary.configInfo?.configs?.[0]?.price??0) | totalCost : (summary.modelInfo?.colors?.[0]?.price??0) : (summary.configInfo?.towHitch??false) : (summary.configInfo?.yoke??false) | currency}}
+      {{(configOptions.configs[0].price) | totalCost : (color.price) : (configOptions.towHitch) : (configOptions.yoke) | currency}}
     </span>
   </section>
 
-</ng-container>
+</section> 

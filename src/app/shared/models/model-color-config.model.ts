@@ -1,4 +1,4 @@
-export interface ModelAndColor {
+export interface Model {
     code:        string;
     description: string;
     colors:      Color[];

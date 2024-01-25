@@ -1,30 +1,44 @@
 <ng-container *ngIf="(configOptions$ | async) as configOptions">
   <h1>Step 2: Select your config and options</h1> 
+  
   <section>
-      <div>
-          <label for="configSelect">Config :</label>
-          <select name="model" id="configSelect" [(ngModel)]= "selectectConfig" (change)="configChange()">
+      <section>
+          <label for="config">Config :</label>
+          <select id="configSelect" 
+                  name="config"  
+                  [compareWith]="compareConfigs"
+                  [(ngModel)]= "selectedConfig"  
+                  (change)="configChange()">
             <option>Choose</option>
-            <option [ngValue]="config" 
-                    *ngFor="let config of configOptions.configs">
+            <option *ngFor="let config of configOptions.configs"
+                    [ngValue]="config">
               {{config.description}}
             </option>
           </select>
-      </div>
-      <ng-container *ngIf="selectectConfig">
-        <span>Range: {{selectectConfig.range}} - Max speed: {{selectectConfig.speed}} - Cost: {{selectectConfig.price | currency}}</span>
+      </section>
+
+      <ng-container *ngIf="selectedConfig?.range">
+        <span>
+          Range: {{selectedConfig.range}} - 
+          Max speed: {{selectedConfig.speed}} - 
+          Cost: {{selectedConfig.price | currency}}
+        </span>
       </ng-container>
+
       <ng-container *ngIf="configOptions.towHitch">
         <section>
-          <label for="includeTow">Tow hitch</label>
-          <input type="checkbox" id="includeTow" name="includeTow"  [(ngModel)]="includeTow" (change)="configChange()"/>
+          <label for="tow">Tow hitch</label>
+          <input type="checkbox" id="includeTow" name="tow" [(ngModel)]="includeTow" (change)="configChange()"/>
         </section>
       </ng-container>
+
       <ng-container *ngIf="configOptions.yoke">
         <section>
-          <label for="includeYoke">Yoke steering wheel</label>
-          <input type="checkbox" id="includeYoke" name="includeYoke" [(ngModel)]="includeYoke" (change)="configChange()"/>
+          <label for="yoke">Yoke steering wheel</label>
+          <input type="checkbox" id="includeYoke" name="yoke" [(ngModel)]="includeYoke" (change)="configChange()"/>
         </section>
       </ng-container>
+
   </section>
+  
 </ng-container>

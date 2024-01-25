@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
 import { StepConfigService } from '../../shared/services/step-config.service';
-import { ModelAndColor } from '../../shared/models/model-color-config.model';
-import { ReplaySubject, Subject, takeUntil, tap } from 'rxjs';
+import { Color, Model} from '../../shared/models/model-color-config.model';
 import { ConfigOptions } from '../../shared/models/config-options.model';
 import { TotalCostPipe } from '../../shared/pipes/total-cost.pipe';
 
@@ -12,17 +12,16 @@ import { TotalCostPipe } from '../../shared/pipes/total-cost.pipe';
   providers: [TotalCostPipe]
 })
 export class StepThreeComponent implements OnInit {
-  destroy$: Subject<boolean> = new Subject<boolean>();
-  modelAndColorConfig$!: ReplaySubject<ModelAndColor>;
-  configOptions$!: ReplaySubject<ConfigOptions>;
+  model!: Model;
+  configOptions!: ConfigOptions;
+  color!: Color;
 
-  constructor(private stepConfigService: StepConfigService) {
-    
-   }
+  constructor(private stepConfigService: StepConfigService) {}
   
   ngOnInit() {
-    this.modelAndColorConfig$ = this.stepConfigService.modelAndColorSubject;
-    this.configOptions$ = this.stepConfigService.configOptionsSubject;
+    this.model = this.stepConfigService.getSelectedModel();
+    this.color = this.stepConfigService.getSelectedColor();
+    this.configOptions = this.stepConfigService.getSelectedConfig();
    }
 
 }

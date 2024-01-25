@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { ConfigOptions } from "../models/config-options.model";
 
 @Pipe({
     name: 'totalCost'

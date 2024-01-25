@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { StepConfigService } from '../../shared/services/step-config.service';
-import { ModelAndColor } from '../../shared/models/model-color-config.model';
+import { Model } from '../../shared/models/model-color-config.model';
 import { Subject, takeUntil, tap } from 'rxjs';
 import { ConfigOptions } from '../../shared/models/config-options.model';
 
@@ -11,25 +11,24 @@ import { ConfigOptions } from '../../shared/models/config-options.model';
 })
 export class StepNavigatorComponent implements OnInit, OnDestroy {
   destroy$: Subject<boolean> = new Subject<boolean>();
-
   isStepTwoActive!: boolean;
   isStepThreeActive!: boolean;
 
   constructor(private stepConfigService: StepConfigService) { }
 
   ngOnInit() {
-    this.stepConfigService.modelAndColorSubject.pipe(
-      tap((selectedModelAndColor: ModelAndColor) => this.updateStepTwoRouterActiveState(selectedModelAndColor)),
+    this.stepConfigService.modelSubject$.pipe(
+      tap((selectedModelAndColor: Model) => this.updateStepTwoRouterActiveState(selectedModelAndColor)),
       takeUntil(this.destroy$)
     ).subscribe();
 
-    this.stepConfigService.configOptionsSubject.pipe(
+    this.stepConfigService.configOptionsSubject$.pipe(
       tap((selectedConfig: ConfigOptions) => this.updateStepThreeRouterActiveState(selectedConfig)),
       takeUntil(this.destroy$)
     ).subscribe();
   }
 
-  updateStepTwoRouterActiveState(selectedModelAndColor: ModelAndColor): void {
+  updateStepTwoRouterActiveState(selectedModelAndColor: Model): void {
     this.isStepTwoActive = !!selectedModelAndColor.code && !!selectedModelAndColor.colors?.[0].code;
   }
 
@@ -41,9 +40,6 @@ export class StepNavigatorComponent implements OnInit, OnDestroy {
     this.destroy$.next(true);
     this.destroy$.complete();
   }
-
-
-
 
 }
 
