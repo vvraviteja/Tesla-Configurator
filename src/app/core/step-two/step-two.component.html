@@ -1,0 +1,30 @@
+<ng-container *ngIf="(configOptions$ | async) as configOptions">
+  <h1>Step 2: Select your config and options</h1> 
+  <section>
+      <div>
+          <label for="configSelect">Config :</label>
+          <select name="model" id="configSelect" [(ngModel)]= "selectectConfig" (change)="configChange()">
+            <option>Choose</option>
+            <option [ngValue]="config" 
+                    *ngFor="let config of configOptions.configs">
+              {{config.description}}
+            </option>
+          </select>
+      </div>
+      <ng-container *ngIf="selectectConfig">
+        <span>Range: {{selectectConfig.range}} - Max speed: {{selectectConfig.speed}} - Cost: {{selectectConfig.price | currency}}</span>
+      </ng-container>
+      <ng-container *ngIf="configOptions.towHitch">
+        <section>
+          <label for="includeTow">Tow hitch</label>
+          <input type="checkbox" id="includeTow" name="includeTow"  [(ngModel)]="includeTow" (change)="configChange()"/>
+        </section>
+      </ng-container>
+      <ng-container *ngIf="configOptions.yoke">
+        <section>
+          <label for="includeYoke">Yoke steering wheel</label>
+          <input type="checkbox" id="includeYoke" name="includeYoke" [(ngModel)]="includeYoke" (change)="configChange()"/>
+        </section>
+      </ng-container>
+  </section>
+</ng-container>

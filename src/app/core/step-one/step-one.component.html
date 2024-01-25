@@ -1,0 +1,24 @@
+<ng-container *ngIf="(modelAndColorConfig$ | async) as modelsAndColors">
+  <h1>Step 1: Choose your Model and Color</h1> 
+  <section>
+      <div>
+          <label for="modelSelect">Model :</label>
+          <select name="model" id="modelSelect" [(ngModel)]= "selectedModelCode" (change)="modelChange()">
+            <option>Choose Model</option>
+            <option [ngValue]="modelAndColor" 
+                    *ngFor="let modelAndColor of modelsAndColors">
+              {{modelAndColor.description}}
+            </option>
+          </select>
+      </div>
+      <ng-container *ngIf="selectedModelCode">
+        <label for="colorSelect">Color :</label>
+        <select name="color" id="colorSelect" [(ngModel)]= "selectedColor" (change)="colorChange()">
+          <option *ngFor="let color of selectedModelCode.colors"
+                  [ngValue]="color">
+            {{color.description}} 
+          </option>
+        </select>
+      </ng-container>
+  </section>
+</ng-container>

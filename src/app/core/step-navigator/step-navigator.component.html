@@ -1,0 +1,7 @@
+<header>
+  <nav class="flex">
+    <a class="step equal-flex-item center-text" routerLink="/step1" > Step 1 </a> 
+    <a class="step equal-flex-item center-text" routerLink="/step2" [ngClass]="{'inactive': !isStepTwoActive }" > Step 2 </a> 
+    <a class="step equal-flex-item center-text" routerLink="/step3" [ngClass]="{'inactive': !isStepThreeActive }"> Step 3 </a> 
+  </nav>
+</header> 
